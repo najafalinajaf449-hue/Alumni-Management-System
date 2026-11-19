@@ -1,0 +1,125 @@
+<%- include('partials/header') %>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h2 class="h4 mb-0">Edit Profile</h2>
+            </div>
+            <div class="card-body">
+
+                <% if (errors.length) { %>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+                    </div>
+                <% } %>
+
+                <form action="/profile/edit" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <div class="row g-3">
+
+                        <div class="col-12 d-flex align-items-center gap-3">
+                            <img id="photoPreview" src="<%= photoUrl(person.profile_photo) %>" alt="Photo" class="avatar-md">
+                            <div class="flex-grow-1">
+                                <label for="profile_photo" class="form-label">Change Photo</label>
+                                <input type="file" class="form-control" id="profile_photo" name="profile_photo"
+                                       accept="image/jpeg,image/png,image/webp,image/gif">
+                                <div class="form-text">JPG, PNG, WEBP or GIF, max 2 MB. Leave empty to keep the current photo.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="full_name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" maxlength="100"
+                                   value="<%= person.full_name || '' %>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email (cannot be changed)</label>
+                            <input type="email" class="form-control" value="<%= person.email %>" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="phone" maxlength="100"
+                                   value="<%= person.phone || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date_of_birth" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                   value="<%= person.date_of_birth || '' %>">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label d-block">Gender</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male"
+                                       <%= person.gender === 'Male' ? 'checked' : '' %>>
+                                <label class="form-check-label" for="genderMale">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female"
+                                       <%= person.gender === 'Female' ? 'checked' : '' %>>
+                                <label class="form-check-label" for="genderFemale">Female</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="student_id" class="form-label">Student ID</label>
+                            <input type="text" class="form-control" id="student_id" name="student_id" maxlength="100"
+                                   value="<%= person.student_id || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="degree" class="form-label">Degree</label>
+                            <input type="text" class="form-control" id="degree" name="degree" maxlength="100"
+                                   value="<%= person.degree || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="department" class="form-label">Department *</label>
+                            <select class="form-select" id="department" name="department" required>
+                                <option value="">Choose...</option>
+                                <% departments.forEach(d => { %>
+                                    <option value="<%= d %>" <%= person.department === d ? 'selected' : '' %>><%= d %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="graduation_year" class="form-label">Graduation Year *</label>
+                            <input type="number" class="form-control" id="graduation_year" name="graduation_year"
+                                   min="1950" max="<%= new Date().getFullYear() + 6 %>"
+                                   value="<%= person.graduation_year || '' %>" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="current_job" class="form-label">Current Job</label>
+                            <input type="text" class="form-control" id="current_job" name="current_job" maxlength="100"
+                                   value="<%= person.current_job || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="company" class="form-label">Company</label>
+                            <input type="text" class="form-control" id="company" name="company" maxlength="100"
+                                   value="<%= person.company || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city" maxlength="100"
+                                   value="<%= person.city || '' %>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" name="country" maxlength="100"
+                                   value="<%= person.country || '' %>">
+                        </div>
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="2" maxlength="500"><%= person.address || '' %></textarea>
+                        </div>
+
+                        <div class="col-12 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">Save Changes</button>
+                            <a href="/profile" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

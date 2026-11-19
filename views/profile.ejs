@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<div class="profile-card card shadow text-center mx-auto">
+    <div class="card-body p-4">
+        <img src="<%= photoUrl(person.profile_photo) %>" alt="<%= person.full_name %>" class="avatar-lg mb-3">
+
+        <h2 class="h4 mb-1"><%= person.full_name %></h2>
+        <p class="designation mb-3">
+            <%= person.current_job || 'Alumni' %><% if (person.company) { %> at <%= person.company %><% } %>
+        </p>
+
+        <div class="text-start mx-auto profile-info">
+            <p><strong>Batch:</strong> <%= person.graduation_year || '-' %></p>
+            <p><strong>Degree:</strong> <%= person.degree || '-' %></p>
+            <p><strong>Department:</strong> <%= person.department || '-' %></p>
+            <p><strong>City:</strong> <%= person.city || '-' %><% if (person.country) { %>, <%= person.country %><% } %></p>
+            <p><strong>Email:</strong> <%= person.email %></p>
+            <% if (person.phone) { %><p><strong>Phone:</strong> <%= person.phone %></p><% } %>
+            <p class="mb-0"><strong>Member since:</strong> <%= String(person.created_at).slice(0, 10) %></p>
+        </div>
+
+        <div class="profile-actions mt-4 d-flex justify-content-center gap-2 flex-wrap">
+            <a href="mailto:<%= person.email %>" class="btn btn-primary">Contact</a>
+            <% if (isOwner) { %>
+                <a href="/profile/edit" class="btn btn-outline-secondary">Edit Profile</a>
+                <form action="/profile/delete" method="POST" class="d-inline" onsubmit="return confirm('Delete your account permanently?');">
+                    <button type="submit" class="btn btn-danger">Delete Account</button>
+                </form>
+            <% } %>
+            <a href="/alumni" class="btn btn-outline-primary">Back to Directory</a>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

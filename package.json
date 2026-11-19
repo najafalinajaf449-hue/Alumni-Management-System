@@ -1,0 +1,21 @@
+{
+  "name": "alumni-system-lab7",
+  "version": "7.0.0",
+  "description": "Alumni Management System - Lab 7 (HTML + CSS + Bootstrap + Node/Express + EJS + MySQL + Multer + Sessions)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^18.0.10",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.4.0",
+    "mysql2": "^3.24.4",
+    "nodemailer": "^10.6.0"
+  }
+}

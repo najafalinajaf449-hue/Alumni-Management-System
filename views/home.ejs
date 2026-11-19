@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<!-- Welcome card -->
+<div class="card shadow mb-5">
+    <div class="card-body text-center py-5">
+        <h2 class="card-title">Welcome to Alumni Management System</h2>
+        <p class="card-text text-muted">This system helps students and alumni stay connected with each other.</p>
+
+        <% if (currentUser) { %>
+            <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+            <a href="/alumni" class="btn btn-outline-primary">Browse Alumni</a>
+        <% } else { %>
+            <a href="/register" class="btn btn-primary">Register Now</a>
+            <a href="/login" class="btn btn-outline-primary">Login</a>
+        <% } %>
+    </div>
+</div>
+
+<!-- Feature cards (Bootstrap grid) -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body">
+                <h5 class="card-title">Create a Profile</h5>
+                <p class="card-text">Register with your degree, job and city, and upload your photo.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body">
+                <h5 class="card-title">Find Classmates</h5>
+                <p class="card-text">Search the directory by name, company or city and filter by department.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body">
+                <h5 class="card-title">Stay Connected</h5>
+                <p class="card-text">See who joined recently and get in touch with fellow alumni.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recently joined (live from MySQL) -->
+<h2 class="h4 mb-3">Recently Joined</h2>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover align-middle">
+        <thead class="table-primary">
+            <tr><th>Name</th><th>Degree</th><th>Department</th><th>Graduation Year</th></tr>
+        </thead>
+        <tbody>
+            <% if (recent.length === 0) { %>
+                <tr><td colspan="4" class="text-center text-muted">No alumni registered yet. Be the first!</td></tr>
+            <% } %>
+            <% recent.forEach(person => { %>
+                <tr>
+                    <td><%= person.full_name %></td>
+                    <td><%= person.degree || '-' %></td>
+                    <td><%= person.department || '-' %></td>
+                    <td><%= person.graduation_year || '-' %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/footer') %>
